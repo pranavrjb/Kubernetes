@@ -1,0 +1,30 @@
+# `replicaset.yaml` file for a Kubernetes ReplicaSet
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    owner: demo-app
+    type: frontend
+    app: demo-app # Label for the ReplicaSet
+spec:
+  template:
+    metadata: 
+      name: demo-app
+      labels:
+        app: demo-app
+        type: frontend
+        owner: demo
+    spec:
+      containers:
+      - name: demo-app
+        image: nginx:latest
+        ports:
+        - containerPort: 80 
+  replicas: 8 # Number of replicas to maintain, we can also increase and decrease replicas.
+  selector:
+    matchLabels:
+     owner: demo
+     
+# We can scaled replicaset via cli "kubectl scale --replicas=6 replicaset myapp-replicaset" though it can cause issues in the file later as it priorites the yamla file replicas.
+# kubectl edit replicaset myapp-replicaset to edit replicaset.yml file temporarily.
