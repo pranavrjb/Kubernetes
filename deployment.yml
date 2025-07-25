@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    type: dev
+    app: demo-app
+
+spec:
+  template:
+    metadata:
+      name: deployment
+      labels:
+        owner: demo-app
+        app: demo-app
+        type: dev
+    spec:
+      containers:
+      - name: mynginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+  replicas: 4
+  selector:
+    matchLabels:
+      type: dev  
